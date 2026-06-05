@@ -1,0 +1,73 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  backend-qa:
+    name: Backend Security & Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - name: Install backend dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install flake8
+          if [ -f backend/requirements.txt ]; then pip install -r backend/requirements.txt; fi
+          if [ -f backend/requirements-dev.txt ]; then pip install -r backend/requirements-dev.txt; fi
+
+      - name: Lint with Flake8
+        run: |
+          # stop the build if there are Python syntax errors or undefined names
+          flake8 backend/app backend/tests --count --select=E9,F63,F7,F82 --show-source --statistics
+          # exit-zero treats all errors as warnings
+          flake8 backend/app backend/tests --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+      - name: Run Bandit Security Audit (SAST)
+        run: bandit -r backend/app -f screen -ll
+
+      - name: Execute Pytest Suite (Mocked MLX)
+        env:
+          MLX_MODEL_PATH: "mock/path"
+        run: pytest backend/tests
+
+  frontend-qa:
+    name: Frontend Build & Testing
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: frontend
+        run: npm ci
+
+      - name: Run Next.js Linter
+        working-directory: frontend
+        run: npm run lint
+
+      - name: Run TypeScript Type Check
+        working-directory: frontend
+        run: npm run type-check
+
+      - name: Execute Vitest Suite
+        working-directory: frontend
+        run: npm run test
