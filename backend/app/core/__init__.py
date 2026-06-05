@@ -1,1 +1,1 @@
-"""Core package — configuration, security, and shared utilities."""
+"""Core package — configuration, security, exceptions, and shared utilities."""

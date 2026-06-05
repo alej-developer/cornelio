@@ -50,6 +50,14 @@ class Settings(BaseSettings):
     # HuggingFace
     HUGGINGFACE_TOKEN: str = ""
 
+    # File uploads
+    MAX_UPLOAD_SIZE_MB: int = 50
+    UPLOAD_DIR: str = "uploads"
+
+    # RAG / Vector Store
+    CHROMA_PERSIST_DIR: str = "chroma_data"
+    EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
+
     # Logging
     LOG_LEVEL: str = "INFO"
     LOG_FORMAT: str = "json"

@@ -1,42 +1,65 @@
 """
-MLX inference endpoints.
+Direct MLX inference endpoint (non-RAG).
 
-Provides text generation via Apple MLX models.
+POST /api/v1/inference/generate
+
+Sends a prompt directly to the MLX model without retrieval augmentation.
 """
 
-from fastapi import APIRouter
-from pydantic import BaseModel, Field
+import logging
+
+from fastapi import APIRouter, Depends
+
+from app.schemas.inference import (
+    ErrorResponse,
+    InferenceRequest,
+    InferenceResponse,
+)
+from app.services.base import LLMServiceBase
+from app.services.dependencies import get_mlx_service
+
+logger = logging.getLogger(__name__)
 
 router = APIRouter()
 
 
-class InferenceRequest(BaseModel):
-    """Schema for inference input."""
-
-    prompt: str = Field(..., min_length=1, max_length=8192, description="Input prompt text.")
-    max_tokens: int = Field(default=512, ge=1, le=4096)
-    temperature: float = Field(default=0.7, ge=0.0, le=2.0)
-
-
-class InferenceResponse(BaseModel):
-    """Schema for inference output."""
-
-    text: str
-    model: str
-    tokens_generated: int
-    latency_ms: float
-
-
-@router.post("/generate", response_model=InferenceResponse)
-async def generate_text(request: InferenceRequest) -> InferenceResponse:
+@router.post(
+    "/generate",
+    response_model=InferenceResponse,
+    responses={
+        503: {"model": ErrorResponse, "description": "Model unavailable"},
+    },
+    summary="Generate text via direct MLX inference",
+)
+async def generate_text(
+    request: InferenceRequest,
+    llm: LLMServiceBase = Depends(get_mlx_service),
+) -> InferenceResponse:
     """
-    Generate text using the loaded MLX model.
+    Generate text using the loaded MLX model without RAG context.
 
-    This is a placeholder that will be replaced with actual MLX inference logic.
+    If the model is not loaded, returns a degraded-mode response.
     """
+    if not llm.is_loaded():
+        return InferenceResponse(
+            text=(
+                "The MLX inference model is not currently loaded. "
+                "Configure MLX_MODEL_PATH in the environment to enable generation."
+            ),
+            model="none",
+            tokens_generated=0,
+            latency_ms=0.0,
+        )
+
+    result = await llm.generate(
+        prompt=request.prompt,
+        max_tokens=request.max_tokens,
+        temperature=request.temperature,
+    )
+
     return InferenceResponse(
-        text="[MLX model not loaded — placeholder response]",
-        model="none",
-        tokens_generated=0,
-        latency_ms=0.0,
+        text=result.text,
+        model=result.model_name,
+        tokens_generated=result.tokens_generated,
+        latency_ms=result.latency_ms,
     )
