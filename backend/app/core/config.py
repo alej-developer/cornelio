@@ -17,7 +17,7 @@ class Settings(BaseSettings):
         extra="ignore",
     )
 
-    # Application
+    # [ES] Aplicación / [EN] Application
     APP_NAME: str = "cornelio-api"
     APP_ENV: str = "development"
     APP_DEBUG: bool = False
@@ -26,39 +26,39 @@ class Settings(BaseSettings):
     APP_SECRET_KEY: str = ""
     APP_ALLOWED_ORIGINS: str = "http://localhost:3000"
 
-    # Database
+    # [ES] Base de datos / [EN] Database
     DATABASE_URL: str = ""
     DATABASE_POOL_SIZE: int = 5
     DATABASE_MAX_OVERFLOW: int = 10
 
-    # Redis
+    # [ES] Redis / [EN] Redis
     REDIS_URL: str = ""
 
-    # JWT
+    # [ES] JWT / [EN] JWT
     JWT_SECRET_KEY: str = ""
     JWT_ALGORITHM: str = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
     JWT_REFRESH_TOKEN_EXPIRE_DAYS: int = 7
 
-    # MLX
+    # [ES] MLX / [EN] MLX
     MLX_MODEL_PATH: str = ""
     MLX_MODEL_CACHE_DIR: str = ""
     MLX_MAX_TOKENS: int = 512
     MLX_TEMPERATURE: float = 0.7
     MLX_DEVICE: str = ""
 
-    # HuggingFace
+    # [ES] HuggingFace / [EN] HuggingFace
     HUGGINGFACE_TOKEN: str = ""
 
-    # File uploads
+    # [ES] Carga de archivos / [EN] File uploads
     MAX_UPLOAD_SIZE_MB: int = 50
     UPLOAD_DIR: str = "uploads"
 
-    # RAG / Vector Store
+    # [ES] RAG / Base Vectorial / [EN] RAG / Vector Store
     CHROMA_PERSIST_DIR: str = "chroma_data"
     EMBEDDING_MODEL: str = "all-MiniLM-L6-v2"
 
-    # Logging
+    # [ES] Registro de logs / [EN] Logging
     LOG_LEVEL: str = "INFO"
     LOG_FORMAT: str = "json"
 

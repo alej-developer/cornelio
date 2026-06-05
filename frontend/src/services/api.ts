@@ -1,10 +1,10 @@
 /**
- * Cliente API base para Cornelio.
+ * [ES] Cliente API base para Cornelio. / [EN] Base API client for Cornelio.
  *
- * Todas las solicitudes pasan por este módulo para garantizar:
- * - Manejo y sanitización de errores consistente
- * - Tiempos de espera vía AbortController
- * - Respuestas tipadas
+ * [ES] Todas las solicitudes pasan por este módulo para garantizar: / [EN] All requests pass through this module to ensure:
+ * - [ES] Manejo y sanitización de errores consistente / [EN] Consistent error handling and sanitization
+ * - [ES] Tiempos de espera vía AbortController / [EN] Timeouts via AbortController
+ * - [ES] Respuestas tipadas / [EN] Typed responses
  */
 
 import { ApiError, handleFetchError } from "@/lib/errors";

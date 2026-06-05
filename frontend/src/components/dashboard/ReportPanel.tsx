@@ -13,7 +13,7 @@ export default function ReportPanel() {
 
   const handleGenerate = async () => {
     setLoading(true);
-    // Simulate API call for report generation
+    // [ES] Simula llamada a la API para generación de informe / [EN] Simulate API call for report generation
     setTimeout(() => {
       setLoading(false);
       setReportUrl("#");

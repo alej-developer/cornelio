@@ -12,7 +12,7 @@ from pathlib import Path
 
 
 # ---------------------------------------------------------------------------
-# Data transfer objects used across service boundaries
+# [ES] Objetos de transferencia de datos usados entre límites de servicio / [EN] Data transfer objects used across service boundaries
 # ---------------------------------------------------------------------------
 
 @dataclass(frozen=True, slots=True)
@@ -46,7 +46,7 @@ class GenerationResult:
 
 
 # ---------------------------------------------------------------------------
-# Service interfaces
+# [ES] Interfaces de servicio / [EN] Service interfaces
 # ---------------------------------------------------------------------------
 
 class LLMServiceBase(ABC):

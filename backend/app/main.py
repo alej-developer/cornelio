@@ -22,7 +22,7 @@ from app.services.document_parser import DocumentParser
 logger = logging.getLogger(__name__)
 
 # ---------------------------------------------------------------------------
-# Logging configuration
+# [ES] Registro de logs / [EN] Logging configuration
 # ---------------------------------------------------------------------------
 
 logging.basicConfig(
@@ -33,7 +33,7 @@ logging.basicConfig(
 
 
 # ---------------------------------------------------------------------------
-# Application lifespan — service initialization and teardown
+# [ES] Aplicación / [EN] Application lifespan — service initialization and teardown
 # ---------------------------------------------------------------------------
 
 @asynccontextmanager
@@ -47,10 +47,10 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     # --- Startup ---
     logger.info("Initializing services...")
 
-    # Document parser (stateless, no async init needed)
+    # [ES] Analizador de documentos (sin estado, no requiere inicio asíncrono) / [EN] Document parser (stateless, no async init needed)
     app.state.document_parser = DocumentParser()
 
-    # RAG engine (ChromaDB)
+    # [ES] Motor RAG (ChromaDB) / [EN] RAG engine (ChromaDB)
     rag_engine = RAGEngine(settings)
     try:
         await rag_engine.initialize()
@@ -61,7 +61,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
         )
     app.state.rag_engine = rag_engine
 
-    # MLX model (may not be available on non-Apple-Silicon platforms)
+    # [ES] MLX / [EN] MLX model (may not be available on non-Apple-Silicon platforms)
     mlx_service = MLXService(settings)
     try:
         await mlx_service.load_model()
@@ -83,7 +83,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
 
 # ---------------------------------------------------------------------------
-# Application factory
+# [ES] Aplicación / [EN] Application factory
 # ---------------------------------------------------------------------------
 
 app = FastAPI(
@@ -95,7 +95,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# Register sanitized exception handlers (no server internals exposed)
+# [ES] Registra manejadores de excepciones sanitizados (sin exposición interna) / [EN] Register sanitized exception handlers (no server internals exposed)
 register_exception_handlers(app)
 
 app.add_middleware(
@@ -110,7 +110,7 @@ app.include_router(api_router, prefix="/api/v1")
 
 
 # ---------------------------------------------------------------------------
-# Infrastructure endpoints
+# [ES] Endpoints de infraestructura / [EN] Infrastructure endpoints
 # ---------------------------------------------------------------------------
 
 @app.get("/health", tags=["infrastructure"])

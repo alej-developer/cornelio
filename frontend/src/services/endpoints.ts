@@ -1,5 +1,5 @@
 /**
- * Capa de servicio tipada — mapea a los endpoints de FastAPI.
+ * [ES] Capa de servicio tipada — mapea a los endpoints de FastAPI. / [EN] Typed service layer — maps to FastAPI endpoints.
  */
 
 import { api } from "./api";

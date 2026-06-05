@@ -24,7 +24,7 @@ export default function DocumentUpload() {
     e.stopPropagation();
     setIsDragging(false);
     if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      // Handle file drop
+      // [ES] Maneja la caída del archivo / [EN] Handle file drop
     }
   };
 

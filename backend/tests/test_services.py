@@ -12,7 +12,7 @@ async def test_mlx_service_initialization():
         service = MLXService()
         await service.initialize()
         
-        # Verifica el intento de carga del modelo usando la ruta local segura
+        # [ES] Verifica el intento de carga del modelo usando la ruta local segura / [EN] Verifies the model load attempt using the secure local path
         mock_load.assert_called_once_with(settings.MLX_MODEL_PATH)
         assert service.is_ready is True
 
@@ -23,7 +23,7 @@ async def test_rag_engine_initialization():
         engine = RAGEngine()
         await engine.initialize()
         
-        # Verifica que la telemetría esté deshabilitada por seguridad
+        # [ES] Verifica que la telemetría esté deshabilitada por seguridad / [EN] Verifies telemetry is disabled for security
         mock_chroma.assert_called_once()
         call_settings = mock_chroma.call_args[1].get('settings')
         assert call_settings.anonymized_telemetry is False

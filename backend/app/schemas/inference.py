@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 
 
 # ---------------------------------------------------------------------------
-# Document endpoints
+# [ES] Endpoints de documentos / [EN] Document endpoints
 # ---------------------------------------------------------------------------
 
 class DocumentUploadResponse(BaseModel):
@@ -33,7 +33,7 @@ class DocumentMetadata(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Query endpoints
+# [ES] Endpoints de consultas / [EN] Query endpoints
 # ---------------------------------------------------------------------------
 
 class QueryRequest(BaseModel):
@@ -83,7 +83,7 @@ class QueryResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Report endpoints
+# [ES] Endpoints de informes / [EN] Report endpoints
 # ---------------------------------------------------------------------------
 
 class ReportSection(BaseModel):
@@ -105,7 +105,7 @@ class ReportResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Inference endpoints (existing, consolidated here)
+# [ES] Endpoints de inferencia (existentes, consolidados aquí) / [EN] Inference endpoints (existing, consolidated here)
 # ---------------------------------------------------------------------------
 
 class InferenceRequest(BaseModel):
@@ -131,7 +131,7 @@ class InferenceResponse(BaseModel):
 
 
 # ---------------------------------------------------------------------------
-# Error response (for OpenAPI documentation)
+# [ES] Respuesta de error (para documentación OpenAPI) / [EN] Error response (for OpenAPI documentation)
 # ---------------------------------------------------------------------------
 
 class ErrorResponse(BaseModel):

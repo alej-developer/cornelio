@@ -68,5 +68,5 @@ def test_error_responses_are_sanitized() -> None:
     )
     assert response.status_code == 422
     data = response.json()
-    # Los errores de validación de FastAPI no deben contener trazas de pila
+    # [ES] Los errores de validación de FastAPI no deben contener trazas de pila / [EN] FastAPI validation errors must not contain stack traces
     assert "traceback" not in str(data).lower()

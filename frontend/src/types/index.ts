@@ -1,12 +1,12 @@
 /**
- * Definiciones de tipos TypeScript para el frontend de Cornelio.
+ * [ES] Definiciones de tipos TypeScript para el frontend de Cornelio. / [EN] TypeScript type definitions for the Cornelio frontend.
  *
- * Los tipos de la API reflejan exactamente los esquemas Pydantic del backend.
- * Los tipos UI son específicos del frontend y se usan para la gestión del estado.
+ * [ES] Los tipos de la API reflejan exactamente los esquemas Pydantic del backend. / [EN] API types exactly mirror backend Pydantic schemas.
+ * [ES] Los tipos UI son específicos del frontend y se usan para la gestión del estado. / [EN] UI types are frontend-specific and used for state management.
  */
 
 // ---------------------------------------------------------------------------
-// Tipos de Solicitud API
+// [ES] Tipos de Solicitud API / [EN] API Request Types
 // ---------------------------------------------------------------------------
 
 export interface InferenceRequest {
@@ -23,7 +23,7 @@ export interface QueryRequest {
 }
 
 // ---------------------------------------------------------------------------
-// Tipos de Respuesta API
+// [ES] Tipos de Respuesta API / [EN] API Response Types
 // ---------------------------------------------------------------------------
 
 export interface InferenceResponse {
@@ -78,7 +78,7 @@ export interface ApiErrorResponse {
 }
 
 // ---------------------------------------------------------------------------
-// Tipos UI
+// [ES] Tipos UI / [EN] UI Types
 // ---------------------------------------------------------------------------
 
 export type NotificationType = "success" | "error" | "warning" | "info";

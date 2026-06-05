@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * Hook genérico para gestionar el estado de llamadas API (loading, data, error).
+ * [ES] Hook genérico para gestionar el estado de llamadas API (loading, data, error). / [EN] Generic hook to manage API call state (loading, data, error).
  *
- * Usa useReducer para transiciones de estado predecibles.
- * Todos los errores son sanitizados antes del estado del componente.
+ * [ES] Usa useReducer para transiciones de estado predecibles. / [EN] Uses useReducer for predictable state transitions.
+ * [ES] Todos los errores son sanitizados antes del estado del componente. / [EN] All errors are sanitized before reaching component state.
  */
 
 import { useCallback, useReducer } from "react";

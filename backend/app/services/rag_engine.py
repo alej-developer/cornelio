@@ -213,7 +213,7 @@ class RAGEngine(VectorStoreBase):
 
 
 # ---------------------------------------------------------------------------
-# Text chunking utility
+# [ES] Utilidad de fragmentación de texto / [EN] Text chunking utility
 # ---------------------------------------------------------------------------
 
 def chunk_text(
