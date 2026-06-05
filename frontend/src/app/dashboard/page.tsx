@@ -5,10 +5,12 @@ import MetricCard from "@/components/dashboard/MetricCard";
 import TaskPanel from "@/components/dashboard/TaskPanel";
 import ReportPanel from "@/components/dashboard/ReportPanel";
 import { systemService } from "@/services/endpoints";
+import { useTranslation } from "@/context/LanguageContext";
 import type { ReadinessResponse } from "@/types";
 import styles from "./page.module.css";
 
 export default function DashboardPage() {
+  const { t } = useTranslation();
   const [readiness, setReadiness] = useState<ReadinessResponse | null>(null);
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export default function DashboardPage() {
         const data = await systemService.readiness();
         if (mounted) setReadiness(data);
       } catch {
-        /* sistema no disponible — las métricas mostrarán valores por defecto */
+        /* system unavailable — metrics will show defaults */
       }
     }
 
@@ -27,33 +29,33 @@ export default function DashboardPage() {
     return () => { mounted = false; };
   }, []);
 
-  const mlxStatus = readiness?.mlx_model_loaded ? "Loaded" : "Not loaded";
-  const vectorStatus = readiness?.vector_store_ready ? "Ready" : "Offline";
+  const mlxStatus = readiness?.mlx_model_loaded ? t("dashboard.mlx_loaded") : t("dashboard.mlx_not_loaded");
+  const vectorStatus = readiness?.vector_store_ready ? t("dashboard.vector_ready") : t("dashboard.vector_offline");
 
   return (
     <div className={styles.dashboard}>
       <section className={styles.metrics}>
         <MetricCard
-          label="MLX Model"
+          label={t("dashboard.mlx_model")}
           value={mlxStatus}
           status={readiness?.mlx_model_loaded ? "positive" : "neutral"}
-          subtitle="Local inference engine"
+          subtitle={t("dashboard.mlx_subtitle")}
         />
         <MetricCard
-          label="Vector Store"
+          label={t("dashboard.vector_store")}
           value={vectorStatus}
           status={readiness?.vector_store_ready ? "positive" : "neutral"}
-          subtitle="ChromaDB document index"
+          subtitle={t("dashboard.vector_subtitle")}
         />
         <MetricCard
-          label="API Status"
-          value={readiness ? "Online" : "Checking"}
+          label={t("dashboard.api_status")}
+          value={readiness ? t("dashboard.api_online") : t("dashboard.api_checking")}
           status={readiness ? "positive" : "neutral"}
-          subtitle="FastAPI backend"
+          subtitle={t("dashboard.api_subtitle")}
         />
         <MetricCard
-          label="System"
-          value={readiness?.status || "Unknown"}
+          label={t("dashboard.system")}
+          value={readiness?.status || t("topbar.status_unknown")}
           status={
             readiness?.status === "ready"
               ? "positive"
@@ -61,7 +63,7 @@ export default function DashboardPage() {
                 ? "neutral"
                 : "negative"
           }
-          subtitle="Overall health"
+          subtitle={t("dashboard.system_subtitle")}
         />
       </section>
 

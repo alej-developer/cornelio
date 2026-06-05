@@ -1,0 +1,55 @@
+{
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "consultas": "RAG Queries",
+    "settings": "Settings"
+  },
+  "topbar": {
+    "status_ready": "Online",
+    "status_degraded": "Degraded",
+    "status_offline": "Offline",
+    "status_unknown": "Unknown"
+  },
+  "dashboard": {
+    "mlx_model": "MLX Engine",
+    "mlx_loaded": "Loaded",
+    "mlx_not_loaded": "Not loaded",
+    "mlx_subtitle": "Local inference engine",
+    "vector_store": "Vector Store",
+    "vector_ready": "Ready",
+    "vector_offline": "Offline",
+    "vector_subtitle": "ChromaDB document index",
+    "api_status": "API Status",
+    "api_online": "Online",
+    "api_checking": "Checking",
+    "api_subtitle": "FastAPI backend",
+    "system": "System",
+    "system_subtitle": "Overall health",
+    "tasks": {
+      "title": "Task Automation",
+      "empty": "No active tasks running.",
+      "new_task": "New Task"
+    },
+    "reports": {
+      "title": "Report Generation",
+      "generate_btn": "Generate Full Report",
+      "generating": "Processing..."
+    }
+  },
+  "consultas": {
+    "rag_query": "RAG Query",
+    "query_placeholder": "Enter your question about the documents...",
+    "max_results": "Max Results:",
+    "temperature": "Temperature:",
+    "submit": "Process Query",
+    "processing": "Analyzing...",
+    "document_upload": "Document Upload",
+    "upload_instruction": "Drag and drop files here or click to upload",
+    "supported_formats": "Supported: PDF, TXT",
+    "response": "Response",
+    "latency": "Latency:",
+    "confidence": "Confidence",
+    "sources": "Document Sources",
+    "no_response": "Enter a query on the left to interact with the local MLX model."
+  }
+}

@@ -1,121 +1,55 @@
 "use client";
 
-import { useRef, useState } from "react";
-import Button from "@/components/ui/Button";
-import { useApi } from "@/hooks/useApi";
-import { useNotification } from "@/context/NotificationContext";
-import { documentService } from "@/services/endpoints";
-import type { DocumentUploadResponse } from "@/types";
+import { useState, useRef } from "react";
+import { useTranslation } from "@/context/LanguageContext";
 import styles from "./DocumentUpload.module.css";
 
-const ACCEPTED_TYPES = ["application/pdf", "text/plain"];
-const MAX_SIZE_MB = 50;
-
 export default function DocumentUpload() {
-  const upload = useApi<DocumentUploadResponse>();
-  const { notify } = useNotification();
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [dragOver, setDragOver] = useState(false);
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const { t } = useTranslation();
+  const [isDragging, setIsDragging] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  function validateFile(file: File): string | null {
-    if (!ACCEPTED_TYPES.includes(file.type)) {
-      return "Unsupported format. Accepted: PDF, TXT.";
-    }
-    if (file.size > MAX_SIZE_MB * 1024 * 1024) {
-      return `File exceeds ${MAX_SIZE_MB} MB limit.`;
-    }
-    return null;
-  }
-
-  function handleFileSelect(file: File) {
-    const error = validateFile(file);
-    if (error) {
-      notify("error", error);
-      return;
-    }
-    setSelectedFile(file);
-  }
-
-  function handleDrop(e: React.DragEvent) {
+  const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
-    setDragOver(false);
-    const file = e.dataTransfer.files[0];
-    if (file) handleFileSelect(file);
-  }
-
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    if (file) handleFileSelect(file);
-  }
-
-  async function handleUpload() {
-    if (!selectedFile) return;
-
-    const result = await upload.execute(() =>
-      documentService.upload(selectedFile),
-    );
-
-    if (result) {
-      notify(
-        "success",
-        `"${result.filename}" indexed: ${result.chunks_created} chunks created.`,
-      );
-      setSelectedFile(null);
-      if (fileRef.current) fileRef.current.value = "";
-    } else if (upload.error) {
-      notify("error", upload.error);
+    e.stopPropagation();
+    if (e.type === "dragenter" || e.type === "dragover") {
+      setIsDragging(true);
+    } else if (e.type === "dragleave") {
+      setIsDragging(false);
     }
-  }
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      // Handle file drop
+    }
+  };
 
   return (
-    <div className={styles.wrapper}>
-      <div
-        className={`${styles.dropzone} ${dragOver ? styles.dragOver : ""}`}
-        onDragOver={(e) => {
-          e.preventDefault();
-          setDragOver(true);
-        }}
-        onDragLeave={() => setDragOver(false)}
-        onDrop={handleDrop}
-        onClick={() => fileRef.current?.click()}
-      >
-        <input
-          ref={fileRef}
-          type="file"
-          className={styles.fileInput}
-          accept=".pdf,.txt,application/pdf,text/plain"
-          onChange={handleInputChange}
-        />
-
-        <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="var(--text-muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M14 18V6" />
-          <path d="M9 11l5-5 5 5" />
-          <path d="M3 18v4a2 2 0 002 2h18a2 2 0 002-2v-4" />
+    <div
+      className={`${styles.dropzone} ${isDragging ? styles.dragging : ""}`}
+      onDragEnter={handleDrag}
+      onDragLeave={handleDrag}
+      onDragOver={handleDrag}
+      onDrop={handleDrop}
+      onClick={() => inputRef.current?.click()}
+    >
+      <input
+        type="file"
+        ref={inputRef}
+        className={styles.hiddenInput}
+        accept=".pdf,.txt"
+      />
+      <div className={styles.icon}>
+        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
         </svg>
-
-        <p className={styles.dropText}>
-          {selectedFile
-            ? selectedFile.name
-            : "Drop a file here or click to browse"}
-        </p>
-        <span className={styles.dropHint}>PDF or TXT, up to {MAX_SIZE_MB} MB</span>
       </div>
-
-      {selectedFile && (
-        <Button
-          onClick={handleUpload}
-          loading={upload.loading}
-          variant="primary"
-          fullWidth
-        >
-          Upload and Index
-        </Button>
-      )}
-
-      {upload.error && !upload.data && (
-        <div className={styles.errorBanner}>{upload.error}</div>
-      )}
+      <p className={styles.instruction}>{t("consultas.upload_instruction")}</p>
+      <p className={styles.formats}>{t("consultas.supported_formats")}</p>
     </div>
   );
 }

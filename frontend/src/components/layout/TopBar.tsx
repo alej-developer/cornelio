@@ -1,55 +1,70 @@
 "use client";
 
-import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import StatusBadge from "@/components/ui/StatusBadge";
+import LanguageSwitcher from "@/components/ui/LanguageSwitcher";
 import { systemService } from "@/services/endpoints";
+import { useTranslation } from "@/context/LanguageContext";
 import styles from "./TopBar.module.css";
 
-const ROUTE_TITLES: Record<string, string> = {
-  "/dashboard": "Dashboard",
-  "/consultas": "Consultas",
-};
-
 export default function TopBar() {
-  const pathname = usePathname();
-  const [systemStatus, setSystemStatus] = useState<"online" | "offline" | "degraded">("pending" as "online" | "offline" | "degraded");
-
-  const title = ROUTE_TITLES[pathname] || "Cornelio";
+  const { t } = useTranslation();
+  const [status, setStatus] = useState<"ready" | "degraded" | "offline" | "unknown">("unknown");
 
   useEffect(() => {
     let mounted = true;
 
-    async function checkSystem() {
+    async function checkStatus() {
       try {
-        const data = await systemService.readiness();
-        if (!mounted) return;
-        if (data.mlx_model_loaded && data.vector_store_ready) {
-          setSystemStatus("online");
-        } else {
-          setSystemStatus("degraded");
-        }
+        const res = await systemService.readiness();
+        if (mounted) setStatus(res.status as "ready" | "degraded" | "offline" | "unknown");
       } catch {
-        if (mounted) setSystemStatus("offline");
+        if (mounted) setStatus("offline");
       }
     }
 
-    checkSystem();
-    const interval = setInterval(checkSystem, 30_000);
-
+    checkStatus();
+    const interval = setInterval(checkStatus, 30000);
     return () => {
       mounted = false;
       clearInterval(interval);
     };
   }, []);
 
+  const getStatusText = () => {
+    switch (status) {
+      case "ready": return t("topbar.status_ready");
+      case "degraded": return t("topbar.status_degraded");
+      case "offline": return t("topbar.status_offline");
+      default: return t("topbar.status_unknown");
+    }
+  };
+
+  const getBadgeStatus = () => {
+    switch (status) {
+      case "ready": return "online";
+      case "degraded": return "degraded";
+      case "unknown": return "pending";
+      default: return "offline";
+    }
+  };
+
   return (
     <header className={styles.topbar}>
       <div className={styles.left}>
-        <h1 className={styles.title}>{title}</h1>
+        <div className={styles.breadcrumb}>
+          <span className={styles.path}>CorpNet</span>
+          <span className={styles.separator}>/</span>
+          <span className={styles.current}>Cornelio Node</span>
+        </div>
       </div>
+      
       <div className={styles.right}>
-        <StatusBadge status={systemStatus} label={`System: ${systemStatus}`} />
+        <LanguageSwitcher />
+        <div className={styles.statusGroup}>
+          <span className={styles.statusLabel}>System Status</span>
+          <StatusBadge status={getBadgeStatus()} label={getStatusText()} />
+        </div>
       </div>
     </header>
   );

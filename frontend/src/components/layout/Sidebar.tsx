@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTranslation } from "@/context/LanguageContext";
 import styles from "./Sidebar.module.css";
 
 interface NavItem {
@@ -12,10 +13,10 @@ interface NavItem {
 
 const DashboardIcon = (
   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-    <rect x="1.5" y="1.5" width="6" height="6" rx="1" />
-    <rect x="10.5" y="1.5" width="6" height="6" rx="1" />
-    <rect x="1.5" y="10.5" width="6" height="6" rx="1" />
-    <rect x="10.5" y="10.5" width="6" height="6" rx="1" />
+    <rect x="2" y="2" width="6" height="6" rx="1" />
+    <rect x="10" y="2" width="6" height="6" rx="1" />
+    <rect x="2" y="10" width="6" height="6" rx="1" />
+    <rect x="10" y="10" width="6" height="6" rx="1" />
   </svg>
 );
 
@@ -26,13 +27,14 @@ const ConsultasIcon = (
   </svg>
 );
 
-const NAV_ITEMS: NavItem[] = [
-  { href: "/dashboard", label: "Dashboard", icon: DashboardIcon },
-  { href: "/consultas", label: "Consultas", icon: ConsultasIcon },
-];
-
 export default function Sidebar() {
   const pathname = usePathname();
+  const { t } = useTranslation();
+
+  const NAV_ITEMS: NavItem[] = [
+    { href: "/dashboard", label: t("sidebar.dashboard"), icon: DashboardIcon },
+    { href: "/consultas", label: t("sidebar.consultas"), icon: ConsultasIcon },
+  ];
 
   return (
     <aside className={styles.sidebar}>

@@ -1,0 +1,55 @@
+{
+  "sidebar": {
+    "dashboard": "Panel de Control",
+    "consultas": "Consultas RAG",
+    "settings": "Configuración"
+  },
+  "topbar": {
+    "status_ready": "En línea",
+    "status_degraded": "Degradado",
+    "status_offline": "Fuera de línea",
+    "status_unknown": "Desconocido"
+  },
+  "dashboard": {
+    "mlx_model": "Motor MLX",
+    "mlx_loaded": "Cargado",
+    "mlx_not_loaded": "No cargado",
+    "mlx_subtitle": "Motor de inferencia local",
+    "vector_store": "Base Vectorial",
+    "vector_ready": "Lista",
+    "vector_offline": "Desconectada",
+    "vector_subtitle": "Índice de documentos ChromaDB",
+    "api_status": "Estado API",
+    "api_online": "En línea",
+    "api_checking": "Comprobando",
+    "api_subtitle": "Backend FastAPI",
+    "system": "Sistema",
+    "system_subtitle": "Salud general",
+    "tasks": {
+      "title": "Automatización de Tareas",
+      "empty": "No hay tareas activas en ejecución.",
+      "new_task": "Nueva Tarea"
+    },
+    "reports": {
+      "title": "Generación de Informes",
+      "generate_btn": "Generar Informe Completo",
+      "generating": "Procesando..."
+    }
+  },
+  "consultas": {
+    "rag_query": "Consulta RAG",
+    "query_placeholder": "Ingresa tu pregunta sobre los documentos...",
+    "max_results": "Max Resultados:",
+    "temperature": "Temperatura:",
+    "submit": "Procesar Consulta",
+    "processing": "Analizando...",
+    "document_upload": "Carga de Documentos",
+    "upload_instruction": "Arrastra archivos aquí o haz clic para subir",
+    "supported_formats": "Soportado: PDF, TXT",
+    "response": "Respuesta",
+    "latency": "Latencia:",
+    "confidence": "Confianza",
+    "sources": "Fuentes Documentales",
+    "no_response": "Ingresa una consulta a la izquierda para interactuar con el modelo MLX local."
+  }
+}

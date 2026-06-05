@@ -6,6 +6,7 @@ import ResponseViewer from "@/components/consultas/ResponseViewer";
 import DocumentUpload from "@/components/consultas/DocumentUpload";
 import { useApi } from "@/hooks/useApi";
 import { useNotification } from "@/context/NotificationContext";
+import { useTranslation } from "@/context/LanguageContext";
 import { queryService } from "@/services/endpoints";
 import type { QueryResponse } from "@/types";
 import styles from "./page.module.css";
@@ -13,6 +14,7 @@ import styles from "./page.module.css";
 export default function ConsultasPage() {
   const query = useApi<QueryResponse>();
   const { notify } = useNotification();
+  const { t } = useTranslation();
 
   async function handleQuery(
     queryText: string,
@@ -38,17 +40,17 @@ export default function ConsultasPage() {
   return (
     <div className={styles.consultas}>
       <div className={styles.left}>
-        <Card header="RAG Query">
+        <Card header={t("consultas.rag_query")}>
           <QueryForm onSubmit={handleQuery} loading={query.loading} />
         </Card>
 
-        <Card header="Document Upload">
+        <Card header={t("consultas.document_upload")}>
           <DocumentUpload />
         </Card>
       </div>
 
       <div className={styles.right}>
-        <Card header="Response">
+        <Card header={t("consultas.response")}>
           <ResponseViewer
             response={query.data}
             loading={query.loading}

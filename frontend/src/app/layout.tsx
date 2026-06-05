@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import MainLayout from "@/components/layout/MainLayout";
+import { LanguageProvider } from "@/context/LanguageContext";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,7 +18,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <MainLayout>{children}</MainLayout>
+        <LanguageProvider>
+          <MainLayout>{children}</MainLayout>
+        </LanguageProvider>
       </body>
     </html>
   );

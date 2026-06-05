@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Button from "@/components/ui/Button";
+import { useTranslation } from "@/context/LanguageContext";
 import styles from "./QueryForm.module.css";
 
 interface QueryFormProps {
@@ -10,88 +11,61 @@ interface QueryFormProps {
 }
 
 export default function QueryForm({ onSubmit, loading }: QueryFormProps) {
+  const { t } = useTranslation();
   const [query, setQuery] = useState("");
-  const [maxResults, setMaxResults] = useState(5);
-  const [temperature, setTemperature] = useState(0.7);
-  const [showParams, setShowParams] = useState(false);
+  const [maxResults, setMaxResults] = useState(3);
+  const [temperature, setTemperature] = useState(0.1);
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (query.trim()) {
-      onSubmit(query.trim(), maxResults, temperature);
-    }
-  }
+    if (!query.trim()) return;
+    onSubmit(query, maxResults, temperature);
+  };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.form}>
-      <div className={styles.inputGroup}>
+    <form className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.field}>
         <textarea
-          id="query-input"
           className={styles.textarea}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Enter your query against the corporate document base..."
+          placeholder={t("consultas.query_placeholder")}
           rows={4}
-          maxLength={4096}
           disabled={loading}
         />
-        <div className={styles.inputFooter}>
-          <button
-            type="button"
-            className={styles.paramsToggle}
-            onClick={() => setShowParams(!showParams)}
-          >
-            {showParams ? "Hide parameters" : "Parameters"}
-          </button>
-          <span className={styles.charCount}>
-            {query.length} / 4096
-          </span>
+      </div>
+
+      <div className={styles.controls}>
+        <div className={styles.controlGroup}>
+          <label className={styles.label}>{t("consultas.max_results")} {maxResults}</label>
+          <input
+            type="range"
+            min="1"
+            max="10"
+            value={maxResults}
+            onChange={(e) => setMaxResults(Number(e.target.value))}
+            disabled={loading}
+          />
+        </div>
+        <div className={styles.controlGroup}>
+          <label className={styles.label}>{t("consultas.temperature")} {temperature}</label>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.1"
+            value={temperature}
+            onChange={(e) => setTemperature(Number(e.target.value))}
+            disabled={loading}
+          />
         </div>
       </div>
 
-      {showParams && (
-        <div className={styles.params}>
-          <div className={styles.param}>
-            <label htmlFor="max-results" className={styles.paramLabel}>
-              Max results
-            </label>
-            <input
-              id="max-results"
-              type="number"
-              className={styles.paramInput}
-              value={maxResults}
-              onChange={(e) => setMaxResults(Number(e.target.value))}
-              min={1}
-              max={20}
-            />
-          </div>
-          <div className={styles.param}>
-            <label htmlFor="temperature" className={styles.paramLabel}>
-              Temperature
-            </label>
-            <input
-              id="temperature"
-              type="number"
-              className={styles.paramInput}
-              value={temperature}
-              onChange={(e) => setTemperature(Number(e.target.value))}
-              min={0}
-              max={2}
-              step={0.1}
-            />
-          </div>
-        </div>
-      )}
-
-      <Button
-        type="submit"
-        variant="primary"
-        fullWidth
-        loading={loading}
-        disabled={!query.trim()}
-      >
-        Send Query
-      </Button>
+      <div className={styles.actions}>
+        <Button loading={loading} variant="primary">
+          {loading ? t("consultas.processing") : t("consultas.submit")}
+        </Button>
+      </div>
     </form>
   );
 }
