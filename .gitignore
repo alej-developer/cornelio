@@ -1,0 +1,204 @@
+# ==============================================================================
+# ROOT .gitignore - Corporate Monorepo (MLX-based)
+# ==============================================================================
+
+# ------------------------------------------------------------------------------
+# Secrets, API Keys, and Environment Configuration
+# ------------------------------------------------------------------------------
+.env
+.env.local
+.env.development
+.env.development.local
+.env.staging
+.env.staging.local
+.env.production
+.env.production.local
+.env.test
+.env.test.local
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+*.jks
+*.keystore
+service-account*.json
+credentials*.json
+secrets.yaml
+secrets.yml
+secrets.json
+*.secret
+
+# ------------------------------------------------------------------------------
+# Python / Backend
+# ------------------------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.whl
+pip-log.txt
+pip-delete-this-directory.txt
+.Python
+develop-eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+
+# Virtual environments
+venv/
+.venv/
+env/
+.env_venv/
+ENV/
+
+# MLX model artifacts and caches
+*.mlpackage
+*.mlmodel
+*.safetensors
+*.gguf
+*.bin
+models/
+model_cache/
+mlx_cache/
+huggingface_cache/
+
+# pytest / coverage
+htmlcov/
+.tox/
+.nox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+
+# mypy / type checking
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pytype/
+.pyre/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# ------------------------------------------------------------------------------
+# Node.js / Frontend (Cornelio)
+# ------------------------------------------------------------------------------
+node_modules/
+.next/
+out/
+.turbo/
+.vercel/
+.netlify/
+*.tsbuildinfo
+next-env.d.ts
+
+# Package manager lockfiles (keep only the primary one)
+# Uncomment the ones you do NOT use:
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# Build output
+frontend/build/
+frontend/dist/
+frontend/.cache/
+frontend/storybook-static/
+
+# ------------------------------------------------------------------------------
+# Databases (local development)
+# ------------------------------------------------------------------------------
+*.sqlite
+*.sqlite3
+*.db
+*.sql.gz
+*.sql.bz2
+*.dump
+*.mdb
+*.ldb
+data/
+db_backups/
+
+# ------------------------------------------------------------------------------
+# IDE and Editor Files
+# ------------------------------------------------------------------------------
+.idea/
+.vscode/settings.json
+.vscode/launch.json
+.vscode/*.code-workspace
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# ------------------------------------------------------------------------------
+# OS-Specific
+# ------------------------------------------------------------------------------
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# ------------------------------------------------------------------------------
+# Docker
+# ------------------------------------------------------------------------------
+docker-compose.override.yml
+.docker/
+
+# ------------------------------------------------------------------------------
+# Logs and Runtime
+# ------------------------------------------------------------------------------
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+celery*.pid
+*.pid
+*.seed
+
+# ------------------------------------------------------------------------------
+# Terraform / Infrastructure
+# ------------------------------------------------------------------------------
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+!*.tfvars.example
+
+# ------------------------------------------------------------------------------
+# Miscellaneous
+# ------------------------------------------------------------------------------
+*.bak
+*.tmp
+*.temp
+*.orig
+*.patch
+.cache/
+tmp/
+temp/
