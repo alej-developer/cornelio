@@ -5,7 +5,7 @@ class CornelioUser(HttpUser):
 
     @task(3)
     def test_inference(self):
-        """Test inference latency under load."""
+        """Prueba de latencia de inferencia bajo carga."""
         self.client.post("/api/v1/inference/generate", json={
             "prompt": "Summarize the primary benefits of using local inference models.",
             "max_tokens": 100,
@@ -14,7 +14,7 @@ class CornelioUser(HttpUser):
 
     @task(2)
     def test_rag_query(self):
-        """Test RAG query latency under load."""
+        """Prueba de latencia de consulta RAG bajo carga."""
         self.client.post("/api/v1/query", json={
             "query": "What are our corporate security policies?",
             "max_results": 3,
@@ -23,5 +23,5 @@ class CornelioUser(HttpUser):
 
     @task(1)
     def test_health(self):
-        """Test system readiness polling overhead."""
+        """Prueba de latencia del sondeo de disponibilidad."""
         self.client.get("/readiness")

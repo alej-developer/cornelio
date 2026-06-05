@@ -11,11 +11,11 @@ describe('Button Component', () => {
   it('renders a spinner and disables button when loading is true', () => {
     const { container } = render(<Button loading>Processing</Button>);
     
-    // Check if the spinner element is present
+    // Verifica si el elemento spinner está presente
     const spinner = container.querySelector('span[class*="spinner"]');
     expect(spinner).not.toBeNull();
     
-    // Check if button is disabled
+    // Verifica si el botón está deshabilitado
     const button = screen.getByRole('button');
     expect(button.hasAttribute('disabled')).toBe(true);
   });

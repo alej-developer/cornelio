@@ -19,7 +19,7 @@ export default function DashboardPage() {
         const data = await systemService.readiness();
         if (mounted) setReadiness(data);
       } catch {
-        /* system unavailable — metrics will show defaults */
+        /* sistema no disponible — las métricas mostrarán valores por defecto */
       }
     }
 

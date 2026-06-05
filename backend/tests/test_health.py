@@ -1,5 +1,5 @@
 """
-Smoke tests for infrastructure endpoints and API route availability.
+Pruebas de humo para endpoints de infraestructura and API route availability.
 """
 
 from fastapi.testclient import TestClient
@@ -10,14 +10,14 @@ client = TestClient(app)
 
 
 def test_health_check() -> None:
-    """Verify the liveness probe returns 200."""
+    """Verifica que la prueba de liveness devuelva 200."""
     response = client.get("/health")
     assert response.status_code == 200
     assert response.json() == {"status": "healthy"}
 
 
 def test_readiness_check() -> None:
-    """Verify the readiness probe returns structured status."""
+    """Verifica que la prueba de readiness devuelva el estado estructurado."""
     response = client.get("/readiness")
     assert response.status_code == 200
     data = response.json()
@@ -27,7 +27,7 @@ def test_readiness_check() -> None:
 
 
 def test_inference_endpoint_exists() -> None:
-    """Verify the inference endpoint is mounted and accepts POST."""
+    """Verifica que el endpoint de inferencia esté montado and accepts POST."""
     response = client.post(
         "/api/v1/inference/generate",
         json={"prompt": "test prompt"},
@@ -39,7 +39,7 @@ def test_inference_endpoint_exists() -> None:
 
 
 def test_query_endpoint_exists() -> None:
-    """Verify the RAG query endpoint is mounted and accepts POST."""
+    """Verifica que el endpoint de consulta RAG esté montado and accepts POST."""
     response = client.post(
         "/api/v1/query",
         json={"query": "test query"},
@@ -51,7 +51,7 @@ def test_query_endpoint_exists() -> None:
 
 
 def test_reports_endpoint_exists() -> None:
-    """Verify the report generation endpoint is mounted."""
+    """Verifica que el endpoint de reportes esté montado."""
     response = client.get("/api/v1/reports/generate")
     assert response.status_code == 200
     data = response.json()
@@ -61,12 +61,12 @@ def test_reports_endpoint_exists() -> None:
 
 
 def test_error_responses_are_sanitized() -> None:
-    """Verify that error responses do not expose server internals."""
+    """Verifica que los errores no expongan detalles del servidor."""
     response = client.post(
         "/api/v1/inference/generate",
-        json={},  # Missing required field
+        json={},  # Falta campo requerido
     )
     assert response.status_code == 422
     data = response.json()
-    # FastAPI validation errors should not contain stack traces
+    # Los errores de validación de FastAPI no deben contener trazas de pila
     assert "traceback" not in str(data).lower()

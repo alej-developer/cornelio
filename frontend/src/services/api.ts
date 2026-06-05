@@ -1,10 +1,10 @@
 /**
- * Base API client for Cornelio.
+ * Cliente API base para Cornelio.
  *
- * All requests go through this module to guarantee:
- * - Consistent error handling and sanitization
- * - Request timeouts via AbortController
- * - Typed responses
+ * Todas las solicitudes pasan por este módulo para garantizar:
+ * - Manejo y sanitización de errores consistente
+ * - Tiempos de espera vía AbortController
+ * - Respuestas tipadas
  */
 
 import { ApiError, handleFetchError } from "@/lib/errors";
@@ -54,7 +54,7 @@ async function request<T>(endpoint: string, config: RequestConfig = {}): Promise
         const data = await res.json();
         msg = data.error || data.detail || "";
       } catch {
-        /* response body not JSON */
+        /* el cuerpo no es JSON */
       }
       throw new ApiError(res.status, msg);
     }
@@ -88,7 +88,7 @@ async function upload<T>(endpoint: string, file: File): Promise<T> {
         const data = await res.json();
         msg = data.error || "";
       } catch {
-        /* non-JSON error body */
+        /* el cuerpo de error no es JSON */
       }
       throw new ApiError(res.status, msg);
     }

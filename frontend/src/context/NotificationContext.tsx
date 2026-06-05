@@ -1,10 +1,10 @@
 "use client";
 
 /**
- * Global notification context with toast rendering.
+ * Contexto global de notificaciones con renderizado de toasts.
  *
- * Notifications auto-dismiss after 5 seconds.
- * Styles are defined in globals.css (notification-* classes).
+ * Las notificaciones se ocultan tras 5 segundos.
+ * Los estilos se definen en globals.css (clases notification-*).
  */
 
 import {
