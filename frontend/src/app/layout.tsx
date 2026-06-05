@@ -1,10 +1,12 @@
 import type { Metadata } from "next";
+import MainLayout from "@/components/layout/MainLayout";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Cornelio — MLX Inference Platform",
+  title: "Cornelio — MLX Corporate Platform",
   description:
-    "Corporate inference interface powered by Apple MLX. Interact with locally-hosted language models through a secure, high-performance web client.",
+    "Corporate inference and document intelligence platform powered by Apple MLX. "
+    + "Query documents, automate tasks, and generate reports through a secure, local-first interface.",
 };
 
 export default function RootLayout({
@@ -14,7 +16,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <MainLayout>{children}</MainLayout>
+      </body>
     </html>
   );
 }

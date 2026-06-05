@@ -1,0 +1,13 @@
+.layout {
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.content {
+  margin-left: var(--sidebar-width);
+  margin-top: var(--topbar-height);
+  min-height: calc(100vh - var(--topbar-height));
+  padding: var(--space-6);
+  overflow-y: auto;
+  max-height: calc(100vh - var(--topbar-height));
+}

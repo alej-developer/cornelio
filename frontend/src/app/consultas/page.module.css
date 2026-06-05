@@ -1,0 +1,40 @@
+.consultas {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: var(--space-4);
+  animation: fadeIn 0.3s ease-out;
+  align-items: start;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.right {
+  min-width: 0;
+  position: sticky;
+  top: 0;
+}
+
+@media (max-width: 1000px) {
+  .consultas {
+    grid-template-columns: 1fr;
+  }
+  .right {
+    position: static;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

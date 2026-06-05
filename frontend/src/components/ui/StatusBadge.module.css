@@ -1,0 +1,56 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-3);
+  border-radius: 100px;
+  font-size: var(--text-xs);
+  font-weight: 500;
+  line-height: 1;
+}
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.online {
+  background: var(--accent-success-muted);
+  color: var(--accent-success);
+}
+.online .dot {
+  background: var(--accent-success);
+  box-shadow: 0 0 6px var(--accent-success);
+}
+
+.offline {
+  background: var(--accent-danger-muted);
+  color: var(--accent-danger);
+}
+.offline .dot {
+  background: var(--accent-danger);
+}
+
+.degraded {
+  background: var(--accent-warning-muted);
+  color: var(--accent-warning);
+}
+.degraded .dot {
+  background: var(--accent-warning);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.pending {
+  background: rgba(100, 116, 139, 0.15);
+  color: var(--text-muted);
+}
+.pending .dot {
+  background: var(--text-muted);
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
